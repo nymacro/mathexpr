@@ -1,0 +1,25 @@
+mathexpr - simple mathematical expression evaluator with precedence
+Copyright (C) 2010 Aaron Marks
+
+See LICENSE for license details.
+
+This small "library" was written to work as a mathematical expression
+evaluator for a Tcl interpreter. It has basic support for functions
+and variables.
+
+To build, run 'make'. To compile and run the test, run 'make test'.
+
+PRECEDENCE HEIRARCHY
+<constant>		<function>		x
+( )
+! - + ~ (unary)
+* /  %
++ - (binary)
+>= <=
+==
+&
+^
+&&
+||
+x ? y : z
+= (assignment)

@@ -1,0 +1,6 @@
+TODO:
+- Clean up code.
+- Improve test suite.
+- Different base number type (int just doesn't cut it).
+- Optimise variable usage (currently retrieves unevaluated string for everything).
+- Add conditionals.
