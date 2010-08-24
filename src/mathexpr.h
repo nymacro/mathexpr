@@ -16,7 +16,7 @@ typedef int MATHEXPR_T;
 typedef MATHEXPR_T (*MathExprFunction)(int argc, MATHEXPR_T argv[]);
 
 struct MathFunction {
-    char name[32];
+    char name[MATHEXPR_NAME_MAX];
     MathExprFunction func;
 };
 typedef struct MathFunction MathFunction;
@@ -25,7 +25,7 @@ typedef struct MathFunction MathFunction;
  #define MATHEXPR_VARIABLES_MAX		32
 
 struct MathVariable {
-	char name[32];
+	char name[MATHEXPR_NAME_MAX];
 	MATHEXPR_T value;
 };
 typedef struct MathVariable MathVariable;
