@@ -9,6 +9,7 @@
 #include <math.h>
 #include <stdint.h>
 
+void init_genrand(unsigned long s);
 unsigned long genrand_int32(void);
 
 MATHEXPR_T Math_expression(MathState *state);
@@ -627,6 +628,7 @@ MATHEXPR_T MathState_init(MathState *state) {
 	Math_clearVariables(state);
  #endif
 #endif
+    return 1;
 }
 
 /* Math_eval:
