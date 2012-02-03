@@ -56,7 +56,7 @@ MATHEXPR_T Math_evalWithState(MathState *state, char *expr);
  #ifdef MATHEXPR_VARIABLES
 void Math_addVariable(MathState *state, char *name, MATHEXPR_T value);
 void Math_setVariable(MathState *state, char *name, MATHEXPR_T value);
-static void Math_clearVariables(MathState *state);
+void Math_clearVariables(MathState *state);
  #endif
 void Math_addFunction(MathState *state, char *name, MathExprFunction func);
 #endif

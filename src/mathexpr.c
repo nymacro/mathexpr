@@ -84,7 +84,7 @@ void Math_setVariable(MathState *state, char *name, MATHEXPR_T value) {
 	Math_addVariable(state, name, value);
 }
 
-static void Math_clearVariables(MathState *state) {
+void Math_clearVariables(MathState *state) {
     int i;
     state->variableCount = 0;
     for (i = 0; i < MATHEXPR_VARIABLES_MAX; i++) {
