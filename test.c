@@ -89,17 +89,17 @@ int main(int argc, char *argv[]) {
     Test_assert("1 | 2", 3);
     Test_assert("3 ^ 1", 2);
 
-	/* these must be in this order -- otherwise the RNG sequence will be out */
-	Test_assert("2d6", 6);
-	Test_assert("d20", 6);
-	Test_assert("-d6", -2);
-	Test_assert("-2d6", -3);
-	Test_assert("2 d 6", 7);
-	Test_assert("2 d 6 + 3", 11);
+    /* these must be in this order -- otherwise the RNG sequence will be out */
+    Test_assert("2d6", 6);
+    Test_assert("d20", 6);
+    Test_assert("-d6", -2);
+    Test_assert("-2d6", -3);
+    Test_assert("2 d 6", 7);
+    Test_assert("2 d 6 + 3", 11);
 
 #ifdef MATHEXPR_FUNCTIONS
     unsigned int rndVal;
-	init_genrand(12);
+    init_genrand(12);
     rndVal = genrand_int32();
 
     //Test_assert("sin(90)", 1); /* makes no sense to test this currently */
@@ -107,16 +107,16 @@ int main(int argc, char *argv[]) {
     Test_assert("rand()", rndVal);
 
  #ifdef MATHEXPR_VARIABLES
-	Test_assert("i = 32", 32);
-	Test_assert("i", 32);
-	Test_assert("(i == 32) ? 1 : 0", 1);
-	Test_assert("i = i + 1", 33);
-	Test_assert("i", 33);
-	Test_assert("j = 10", 10);
-	Test_assert("j", 10);
+    Test_assert("i = 32", 32);
+    Test_assert("i", 32);
+    Test_assert("(i == 32) ? 1 : 0", 1);
+    Test_assert("i = i + 1", 33);
+    Test_assert("i", 33);
+    Test_assert("j = 10", 10);
+    Test_assert("j", 10);
  #endif
 #endif
-    
+
     printf("%i tests, %i passes, %i fails\n", hadTest, hadPass, hadFail);
     if (hadFail)
         return 1;
