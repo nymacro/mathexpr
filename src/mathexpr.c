@@ -393,6 +393,7 @@ MATHEXPR_T Math_getTerm(MathState *state) {
                 break;
             case '%':
                 Math_match(state, '%');
+                /* fails on x % 0 */
                 value = value % Math_getUnary(state);
                 break;
         }
@@ -581,9 +582,9 @@ MATHEXPR_T Math_getAssignment(MathState *state) {
 	
 	/* get unevaluated string in case it is a variable */
 	p = state->p;
-    value = Math_getTernary(state);
+	value = Math_getTernary(state);
 
-	if (state->p - p >= 0 || state->p - p <= 32) {
+	if (state->p - p > 0 && state->p - p <= 32) {
 		strncpy(tmp, p, state->p - p);
 		tmp[state->p - p] = '\0';
 	}
