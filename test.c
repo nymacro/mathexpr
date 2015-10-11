@@ -1,6 +1,6 @@
 /*
  * mathexpr test suite
- * Copyright (C) 2008-2010 Aaron Marks. All Rights Reserved.
+ * Copyright (C) 2008-2015 Aaron Marks. All Rights Reserved.
  */
 
 #include <stdio.h>
@@ -33,7 +33,7 @@ int Test_assert(char *expr, MATHEXPR_T val) {
 
 int main(int argc, char *argv[]) {
     printf("***** mathexpr test suite!\n");
-    printf("***** Copyright (C) 2008-2010 Aaron Marks. All Rights Reserved.\n");
+    printf("***** Copyright (C) 2008-2015 Aaron Marks. All Rights Reserved.\n");
 
 	MathState_init(&state);
 
