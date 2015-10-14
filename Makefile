@@ -2,6 +2,8 @@ OBJS=src/mathexpr.o src/mt19937ar.o
 LIBFILE=libmathexpr.a
 CFLAGS=
 
+.PHONY: all test clean
+
 all: $(LIBFILE)
 
 test: all
