@@ -1,6 +1,6 @@
 /*
  * mathexpr -- Mathematical Expression Evaluator
- * Copyright (C) 2008-2015 Aaron Marks. All Rights Reserved.
+ * Copyright (C) 2008-2018 Aaron Marks. All Rights Reserved.
  */
 #include "mathexpr.h"
 #include <stdio.h>

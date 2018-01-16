@@ -1,6 +1,6 @@
 /*
  * mathexpr -- Mathematical Expression Evaluator
- * Copyright (C) 2008-2015 Aaron Marks
+ * Copyright (C) 2008-2018 Aaron Marks
  */
 #ifndef MATHEXPR_MATHEXPR_H
 #define MATHEXPR_MATHEXPR_H
