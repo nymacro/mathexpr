@@ -197,7 +197,9 @@ MATHEXPR_T Math_getFunction(MathState *state) {
     int argc = 0;
     MATHEXPR_T args[32];
     int i;
-    
+
+    memset(functionName, 0, sizeof(functionName));
+
     for (i = 0; i < 32; i++) {
         if (isalpha(Math_look(state))) {
             functionName[i] = Math_look(state);
