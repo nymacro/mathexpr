@@ -1,6 +1,6 @@
 OBJS=src/mathexpr.o src/mt19937ar.o
 LIBFILE=libmathexpr.a
-CFLAGS=
+CFLAGS=$(EXTRA_CFLAGS)
 
 .PHONY: all test clean
 

@@ -21,7 +21,7 @@ void Math_addFunction(MathState *state, char *name, MathExprFunction func) {
         fprintf(stderr, "ERROR: tried to add function to MathExpr when max is reached!\n");
         return;
     }
-	strncpy(state->functions[state->functionCount].name, name, MATHEXPR_NAME_MAX);
+    strncpy(state->functions[state->functionCount].name, name, MATHEXPR_NAME_MAX);
     state->functions[state->functionCount++].func = func;
 }
 
@@ -29,7 +29,7 @@ static void Math_clearFunctions(MathState *state) {
     int i;
     state->functionCount = 0;
     for (i = 0; i < MATHEXPR_FUNCTIONS_MAX; i++) {
-		strcpy(state->functions[i].name, "");
+        strcpy(state->functions[i].name, "");
         state->functions[i].func = NULL;
     }
 }
@@ -45,7 +45,7 @@ static MATHEXPR_T Math_Std_sin(int argc, MATHEXPR_T argv[]) {
 static MATHEXPR_T Math_Std_seed(int argc, MATHEXPR_T argv[]) {
     if (argc != 1)
         return 0;
-	init_genrand(argv[0]);
+    init_genrand(argv[0]);
     //srand(argv[0]);
     return 1;
 }
@@ -53,7 +53,7 @@ static MATHEXPR_T Math_Std_seed(int argc, MATHEXPR_T argv[]) {
 static MATHEXPR_T Math_Std_rand(int argc, MATHEXPR_T argv[]) {
     if (argc != 0)
         return 0;
-	return genrand_int32();
+    return genrand_int32();
     //return rand();
 }
 
@@ -63,25 +63,25 @@ static void Math_registerStdFunctions(MathState *state) {
     Math_addFunction(state, "rand", Math_Std_rand);
 }
 
- #ifdef MATHEXPR_VARIABLES
+#ifdef MATHEXPR_VARIABLES
 void Math_addVariable(MathState *state, char *name, MATHEXPR_T value) {
-	if (state->variableCount >= MATHEXPR_VARIABLES_MAX) {
+    if (state->variableCount >= MATHEXPR_VARIABLES_MAX) {
         fprintf(stderr, "ERROR: tried to add variable to MathExpr when max is reached!\n");
         return;
     }
-	strncpy(state->variables[state->variableCount].name, name, MATHEXPR_NAME_MAX);
+    strncpy(state->variables[state->variableCount].name, name, MATHEXPR_NAME_MAX);
     state->variables[state->variableCount++].value = value;
 }
 
 void Math_setVariable(MathState *state, char *name, MATHEXPR_T value) {
-	int i;
-	for (i = 0; i < state->variableCount; i++) {
-		if (strcmp(name, state->variables[i].name) == 0) {
-			state->variables[i].value = value;
-			return;
-		}
-	}
-	Math_addVariable(state, name, value);
+    int i;
+    for (i = 0; i < state->variableCount; i++) {
+        if (strcmp(name, state->variables[i].name) == 0) {
+            state->variables[i].value = value;
+            return;
+        }
+    }
+    Math_addVariable(state, name, value);
 }
 
 void Math_clearVariables(MathState *state) {
@@ -92,7 +92,7 @@ void Math_clearVariables(MathState *state) {
         state->variables[i].value = 0;
     }
 }
- #endif
+#endif
 
 #endif
 
@@ -100,18 +100,18 @@ void Math_clearVariables(MathState *state) {
  * Generate number within range (discarding skewed numbers)
  */
 static int Math_randomRange(int low, int high) {
-	unsigned int randomNumber;
-	int range = high - low + 1; /* inclusive */
+    unsigned int randomNumber;
+    int range = high - low + 1; /* inclusive */
 	
-	if (low >= high)
-		return 0;
+    if (low >= high)
+        return 0;
 	
-	/* generate a random number which is equally distrubuted between the range wanted */
-	do {
-		randomNumber = genrand_int32();
-	} while (randomNumber > INT32_MAX - (INT32_MAX % range));
+    /* generate a random number which is equally distrubuted between the range wanted */
+    do {
+        randomNumber = genrand_int32();
+    } while (randomNumber > INT32_MAX - (INT32_MAX % range));
 	
-	return low + randomNumber % range;
+    return low + randomNumber % range;
 }
 
 /**********************************************************************/
@@ -214,7 +214,6 @@ MATHEXPR_T Math_getFunction(MathState *state) {
     for (i = 0; i < state->functionCount; i++) {
         if (strcmp(functionName, state->functions[i].name) == 0) {
             if (Math_look(state) == '(') {
-                int j;
                 Math_match(state, '(');
                 Math_skipSpace(state);
                 if (Math_look(state) != ')') {
@@ -232,13 +231,13 @@ MATHEXPR_T Math_getFunction(MathState *state) {
         }
     }
 
- #ifdef MATHEXPR_VARIABLES
-	for (i = 0; i < state->variableCount; i++) {
-		if (strcmp(functionName, state->variables[i].name) == 0) {
-			return state->variables[i].value;
-		}
-	}
- #endif
+#ifdef MATHEXPR_VARIABLES
+    for (i = 0; i < state->variableCount; i++) {
+        if (strcmp(functionName, state->variables[i].name) == 0) {
+            return state->variables[i].value;
+        }
+    }
+#endif
 
     return value;
 }
@@ -249,8 +248,6 @@ MATHEXPR_T Math_getFunction(MathState *state) {
  */
 MATHEXPR_T Math_getNumber(MathState *state) {
     MATHEXPR_T value = 0;
-    char numberBuf[64];
-    int i;
 
     /* skip whitespace */
     Math_skipSpace(state);
@@ -263,11 +260,11 @@ MATHEXPR_T Math_getNumber(MathState *state) {
         return 0;
 #endif
     } else {
-	    while (isdigit(Math_look(state))) {
-	        value = 10 * value + Math_look(state) - '0';
-	        Math_gotoNext(state);
-	    }
-	}
+        while (isdigit(Math_look(state))) {
+            value = 10 * value + Math_look(state) - '0';
+            Math_gotoNext(state);
+        }
+    }
     
     /* skip whitespace */
     Math_skipSpace(state);
@@ -298,8 +295,8 @@ MATHEXPR_T Math_getDiceUnary(MathState *state) {
     if (Math_look(state) != 'd') {
         value = Math_getFactor(state);
     } else {
-		Math_match(state, 'd');
-		value = Math_randomRange(1, Math_getFactor(state));
+        Math_match(state, 'd');
+        value = Math_randomRange(1, Math_getFactor(state));
     }
     return value;
 }
@@ -309,19 +306,18 @@ MATHEXPR_T Math_getDiceUnary(MathState *state) {
  */
 MATHEXPR_T Math_getDice(MathState *state) {
     MATHEXPR_T value = 0;
-	MATHEXPR_T nextValue = 0;
-	MATHEXPR_T times = 0;
-	MATHEXPR_T total = 0;
-	MATHEXPR_T i = 0;
+    MATHEXPR_T nextValue = 0;
+    MATHEXPR_T times = 0;
+    MATHEXPR_T i = 0;
     value = Math_getDiceUnary(state);
     while (Math_look(state) == 'd') {
         Math_match(state, 'd');
-		times = value;
-		value = 0;
-		nextValue = Math_getDiceUnary(state);
-		for (i = 0; i < times; i++) {
-	        value += Math_randomRange(1, nextValue);
-		}
+        times = value;
+        value = 0;
+        nextValue = Math_getDiceUnary(state);
+        for (i = 0; i < times; i++) {
+            value += Math_randomRange(1, nextValue);
+        }
     }
     return value;
 }
@@ -338,22 +334,22 @@ MATHEXPR_T Math_getUnary(MathState *state) {
         value = Math_getDice(state);
     } else {
         switch (Math_look(state)) {
-            case '+':
-                Math_match(state, '+');
-                value = Math_getDice(state);
-                break;
-            case '-':
-                Math_match(state, '-');
-                value = -Math_getDice(state);
-                break;
-            case '!':
-                Math_match(state, '!');
-                value = !Math_getDice(state);
-                break;
-            case '~':
-                Math_match(state, '~');
-                value = ~Math_getDice(state);
-                break;
+        case '+':
+            Math_match(state, '+');
+            value = Math_getDice(state);
+            break;
+        case '-':
+            Math_match(state, '-');
+            value = -Math_getDice(state);
+            break;
+        case '!':
+            Math_match(state, '!');
+            value = !Math_getDice(state);
+            break;
+        case '~':
+            Math_match(state, '~');
+            value = ~Math_getDice(state);
+            break;
         }
     }
     return value;
@@ -364,40 +360,40 @@ MATHEXPR_T Math_getUnary(MathState *state) {
  */
 MATHEXPR_T Math_getTerm(MathState *state) {
     MATHEXPR_T value = 0;
-	MATHEXPR_T tmp = 0;
+    MATHEXPR_T tmp = 0;
     value = Math_getUnary(state);
     while (Math_look(state) == '*' || Math_look(state) == '/' || Math_look(state) == '%' ||
-		(Math_look(state) == '*' && Math_peek(state) == '*')) {
+           (Math_look(state) == '*' && Math_peek(state) == '*')) {
 
         /* exponentiation '**' */
         if (Math_look(state) == '*' && Math_peek(state) == '*') {
 
         }
         switch (Math_look(state)) {
-            case '*':
-                if (Math_peek(state) == '*') {
-                    Math_match(state, '*');
-                    Math_match(state, '*');
-                    value = pow(value, Math_getUnary(state));
-                } else {
-                    Math_match(state, '*');
-                    value = value * Math_getUnary(state);
-                }
-                break;
-            case '/':
-                Math_match(state, '/');
-				tmp = Math_getUnary(state);
-				if (tmp == 0) {
-					printf("attempt to divide by zero!\n");
-					tmp = 1;
-				}
-                value = value / tmp;
-                break;
-            case '%':
-                Math_match(state, '%');
-                /* fails on x % 0 */
-                value = value % Math_getUnary(state);
-                break;
+        case '*':
+            if (Math_peek(state) == '*') {
+                Math_match(state, '*');
+                Math_match(state, '*');
+                value = pow(value, Math_getUnary(state));
+            } else {
+                Math_match(state, '*');
+                value = value * Math_getUnary(state);
+            }
+            break;
+        case '/':
+            Math_match(state, '/');
+            tmp = Math_getUnary(state);
+            if (tmp == 0) {
+                printf("attempt to divide by zero!\n");
+                tmp = 1;
+            }
+            value = value / tmp;
+            break;
+        case '%':
+            Math_match(state, '%');
+            /* fails on x % 0 */
+            value = value % Math_getUnary(state);
+            break;
         }
     }
     return value;
@@ -411,14 +407,14 @@ MATHEXPR_T Math_getSum(MathState *state) {
     value = Math_getTerm(state);
     while (Math_look(state) == '+' || Math_look(state) == '-') {
         switch (Math_look(state)) {
-            case '+':
-                Math_match(state, '+');
-                value = value  + Math_getTerm(state);
-                break;
-            case '-':
-                Math_match(state, '-');
-                value = value - Math_getTerm(state);
-                break;
+        case '+':
+            Math_match(state, '+');
+            value = value  + Math_getTerm(state);
+            break;
+        case '-':
+            Math_match(state, '-');
+            value = value - Math_getTerm(state);
+            break;
         }
     }
     return value;
@@ -459,16 +455,16 @@ MATHEXPR_T Math_getEquality(MathState *state) {
     while ((Math_look(state) == '=' && Math_peek(state) == '=') ||
            (Math_look(state) == '!' && Math_peek(state) == '=')) {
         switch (Math_look(state)) {
-            case '=':
-                Math_match(state, '=');
-                Math_match(state, '=');
-                value = value == Math_getRelational(state);
-                break;
-            case '!':
-                Math_match(state, '!');
-                Math_match(state, '=');
-                value = value != Math_getRelational(state);
-                break;
+        case '=':
+            Math_match(state, '=');
+            Math_match(state, '=');
+            value = value == Math_getRelational(state);
+            break;
+        case '!':
+            Math_match(state, '!');
+            Math_match(state, '=');
+            value = value != Math_getRelational(state);
+            break;
         }
     }
     return value;
@@ -572,35 +568,35 @@ MATHEXPR_T Math_getTernary(MathState *state) {
 
 #ifdef MATHEXPR_VARIABLES
 MATHEXPR_T Math_getAssignment(MathState *state) {
-	MATHEXPR_T value = 0;
-	int i;
-	char *p;
-	char tmp[32] = "";
+    MATHEXPR_T value = 0;
+    int i;
+    char *p;
+    char tmp[32] = "";
 	
-	/* NOTE:
-	 * This is really, really inefficient -- as it will copy the unevaluated string for anything,
-	 * even if it isn't actually a variable.
-	 */
+    /* NOTE:
+     * This is really, really inefficient -- as it will copy the unevaluated string for anything,
+     * even if it isn't actually a variable.
+     */
 	
-	/* get unevaluated string in case it is a variable */
-	p = state->p;
-	value = Math_getTernary(state);
+    /* get unevaluated string in case it is a variable */
+    p = state->p;
+    value = Math_getTernary(state);
 
-	if (state->p - p > 0 && state->p - p <= 32) {
-		strncpy(tmp, p, state->p - p);
-		tmp[state->p - p] = '\0';
-	}
+    if (state->p - p > 0 && state->p - p <= 32) {
+        strncpy(tmp, p, state->p - p);
+        tmp[state->p - p] = '\0';
+    }
 	
-	/* get rid of any trailing spaces */
-	for (i = strlen(tmp); i > 0; i--) {
-		if (isspace(tmp[i]))
-			tmp[i] = '\0';
-	}
+    /* get rid of any trailing spaces */
+    for (i = strlen(tmp); i > 0; i--) {
+        if (isspace(tmp[i]))
+            tmp[i] = '\0';
+    }
 	
     while (Math_look(state) == '=') {
         Math_match(state, '=');
-		value = Math_getTernary(state);
-		Math_setVariable(state, tmp, value);
+        value = Math_getTernary(state);
+        Math_setVariable(state, tmp, value);
     }
     return value;
 }
@@ -612,7 +608,7 @@ MATHEXPR_T Math_getAssignment(MathState *state) {
 MATHEXPR_T Math_expression(MathState *state) {
     Math_skipSpace(state);
 #ifdef MATHEXPR_VARIABLES
-	return Math_getAssignment(state);
+    return Math_getAssignment(state);
 #else
     return Math_getTernary(state);
 #endif
@@ -622,14 +618,14 @@ MATHEXPR_T Math_expression(MathState *state) {
  * Initialise the MathState structure
  */
 MATHEXPR_T MathState_init(MathState *state) {
-	state->buffer = NULL;
-	state->p = NULL;
+    state->buffer = NULL;
+    state->p = NULL;
 #ifdef MATHEXPR_FUNCTIONS
     Math_clearFunctions(state);
     Math_registerStdFunctions(state);
- #ifdef MATHEXPR_VARIABLES
-	Math_clearVariables(state);
- #endif
+#ifdef MATHEXPR_VARIABLES
+    Math_clearVariables(state);
+#endif
 #endif
     return 1;
 }
@@ -638,10 +634,10 @@ MATHEXPR_T MathState_init(MathState *state) {
  * Set up state and evaluate an expression, returning the result.
  */
 MATHEXPR_T Math_eval(char *expr) {
-	MathState state;
-	MathState_init(&state);
-	state.buffer = expr;
-	state.p = expr;
+    MathState state;
+    MathState_init(&state);
+    state.buffer = expr;
+    state.p = expr;
     return Math_expression(&state);
 }
 
@@ -649,7 +645,7 @@ MATHEXPR_T Math_eval(char *expr) {
  * Evaluate an expression with predefined state, returning the result.
  */
 MATHEXPR_T Math_evalWithState(MathState *state, char *expr) {
-	state->buffer = expr;
-	state->p = expr;
-	return Math_expression(state);
+    state->buffer = expr;
+    state->p = expr;
+    return Math_expression(state);
 }
